@@ -6,7 +6,7 @@ class Event < ApplicationRecord
 
   has_one_attached :cover_image
 
-  validates :image, presence: true, blob: { content_type: Attachable::IMAGE_TYPES }
+  validates :cover_image, presence: true
 
   validates :title,
             :start_date,
