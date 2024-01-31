@@ -5,9 +5,10 @@ class CreateAttendances < ActiveRecord::Migration[7.0]
     create_table :attendances do |t|
       t.references :event, null: false, foreign_key: true
       t.references :participant, null: false, foreign_key: true
+      t.date :date
       t.timestamps
     end
-    add_index :attendances, %i[event_id participant_id], unique: true
+    add_index :attendances, %i[event_id participant_id date], unique: true
 
   end
 end
