@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Event < ApplicationRecord
+  has_many :participants
   validates :title,
             :start_date,
             :coordinator,
