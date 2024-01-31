@@ -2,6 +2,8 @@
 
 class Event < ApplicationRecord
   has_many :participants
+  has_many :attendances
+  
   validates :title,
             :start_date,
             :coordinator,
