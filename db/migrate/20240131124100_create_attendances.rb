@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # frozen_literal_string: true
 
 class CreateAttendances < ActiveRecord::Migration[7.0]
@@ -9,6 +11,5 @@ class CreateAttendances < ActiveRecord::Migration[7.0]
       t.timestamps
     end
     add_index :attendances, %i[event_id participant_id date], unique: true
-
   end
 end
