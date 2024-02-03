@@ -15,7 +15,10 @@ class EventsController < ApplicationController
 
   # GET /events/1
   def show
-    render json: @event
+    render json: {
+      message: 'Event fetched successfully',
+      data: serialize(@event, EventSerializer)
+    }
   end
 
   # POST /events
@@ -31,7 +34,10 @@ class EventsController < ApplicationController
   # PATCH/PUT /events/1
   def update
     if @event.update(event_params)
-      render json: @event
+      render json: {
+        message: 'Updated the event successfully',
+        data: serialize(@event, EventSerializer)
+      }
     else
       render json: @event.errors, status: :unprocessable_entity
     end
@@ -39,7 +45,13 @@ class EventsController < ApplicationController
 
   # DELETE /events/1
   def destroy
-    @event.destroy
+    if @event.destroy
+      render json:{
+        message: 'You are thanos',
+      }
+    else
+      render json: @event.errors, status: :unprocessable_entity
+    end    
   end
 
   private
