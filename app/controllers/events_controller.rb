@@ -5,9 +5,12 @@ class EventsController < ApplicationController
 
   # GET /events
   def index
-    @events = Event.all
+    events = Event.all
 
-    render json: @events
+    render json: {
+      message: 'All events fetched',
+      data: serialize(events, EventSerializer)
+    }
   end
 
   # GET /events/1
@@ -17,13 +20,12 @@ class EventsController < ApplicationController
 
   # POST /events
   def create
-    @event = Event.new(event_params)
+    event = Event.create!(event_params)
 
-    if @event.save
-      render json: @event, status: :created, location: @event
-    else
-      render json: @event.errors, status: :unprocessable_entity
-    end
+    render json: {
+      message: 'New Event created successfully',
+      data: serialize(event, EventSerializer)
+    }
   end
 
   # PATCH/PUT /events/1
@@ -49,6 +51,15 @@ class EventsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def event_params
-    params.fetch(:event, {})
+    params.permit(
+      :title,
+      :start_date,
+      :coordinator,
+      :sub_coordinator,
+      :description,
+      :venue,
+      :end_date,
+      :cover_image
+    )
   end
 end
