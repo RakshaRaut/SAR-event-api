@@ -16,5 +16,17 @@
 #  updated_at      :datetime         not null
 #
 class EventSerializer < ActiveModel::Serializer
-  attributes :id
+  attributes :id,
+             :title,
+             :start_date,
+             :coordinator,
+             :sub_coordinator,
+             :description,
+             :venue,
+             :end_date,
+             :image_url
+
+  def image_url
+    object.image_url
+  end
 end
