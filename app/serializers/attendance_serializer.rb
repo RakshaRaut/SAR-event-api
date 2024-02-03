@@ -23,5 +23,9 @@
 #  fk_rails_...  (participant_id => participants.id)
 #
 class AttendanceSerializer < ActiveModel::Serializer
-  attributes :id
+  attributes :id, :participant
+
+  def participant
+    ParticipantSerializer.new(object&.participant)
+  end
 end

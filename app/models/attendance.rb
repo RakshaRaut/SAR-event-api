@@ -24,4 +24,15 @@
 #
 class Attendance < ApplicationRecord
   belongs_to :event
+  belongs_to :participant
+
+  validate :date_within_event_dates
+
+  private
+
+  def date_within_event_dates
+    return if event.nil? || date.nil? || (event.start_date..event.end_date).cover?(date)
+
+    errors.add(:date, 'must be within the event start and end dates')
+  end
 end

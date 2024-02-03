@@ -1,43 +1,38 @@
 # frozen_string_literal: true
 
 class AttendancesController < ApplicationController
-  before_action :set_attendance, only: %i[show update destroy]
+  before_action :set_attendance, only: %i[show]
 
   # GET /attendances
   def index
-    @attendances = Attendance.all
-
-    render json: @attendances
-  end
-
-  # GET /attendances/1
-  def show
-    render json: @attendance
+    attendance = Attendance.where(event_id: params[:event_id])
+    render json: {
+      message: 'fetched attendance sheet',
+      data: serialize(attendance, AttendanceSerializer)
+    }
   end
 
   # POST /attendances
   def create
-    @attendance = Attendance.new(attendance_params)
-
-    if @attendance.save
-      render json: @attendance, status: :created, location: @attendance
+    participant = Participant.find_by(email: attendance_params[:email])
+    pry
+    if participant.nil?
+      render json: {
+        message: 'Talai tori, register garyo rainaxas ni nigga'
+      }
     else
-      render json: @attendance.errors, status: :unprocessable_entity
-    end
-  end
+      attendance = Attendance.create!(
+        participant: participant,
+        event_id: attendance_params[:event_id],
+        date: DateTime.now
+      )
 
-  # PATCH/PUT /attendances/1
-  def update
-    if @attendance.update(attendance_params)
-      render json: @attendance
-    else
-      render json: @attendance.errors, status: :unprocessable_entity
-    end
-  end
+      render json: {
+        message: 'Successfully recorded the attendance of the event.',
+        data: serialize(attendance, AttendanceSerializer)
+      }
 
-  # DELETE /attendances/1
-  def destroy
-    @attendance.destroy
+    end
   end
 
   private
@@ -49,6 +44,6 @@ class AttendancesController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def attendance_params
-    params.fetch(:attendance, {})
+    params.permit(:email, :event_id)
   end
 end
