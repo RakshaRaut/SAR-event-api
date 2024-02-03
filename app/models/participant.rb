@@ -25,4 +25,6 @@
 #
 class Participant < ApplicationRecord
   belongs_to :event
+
+  validates :name, :email, :collage, :faculty, :phone_no, :event_id, presence: true
 end

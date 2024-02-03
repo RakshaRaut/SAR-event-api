@@ -5,31 +5,39 @@ class ParticipantsController < ApplicationController
 
   # GET /participants
   def index
-    @participants = Participant.all
+    participants = Participant.where(event_id: params[:event_id])
 
-    render json: @participants
+    render json: {
+      message: 'Participant list fetched',
+      data: serialize(participants, ParticipantSerializer)
+    }
   end
 
   # GET /participants/1
   def show
-    render json: @participant
+    render json: {
+      message: 'Participant fetched successfully',
+      data: serialize(@participant, ParticipantSerializer)
+    }
   end
 
   # POST /participants
   def create
-    @participant = Participant.new(participant_params)
+    participant = Participant.create!(participant_params)
 
-    if @participant.save
-      render json: @participant, status: :created, location: @participant
-    else
-      render json: @participant.errors, status: :unprocessable_entity
-    end
+    render json: {
+      message: 'New Participant created successfully',
+      data: serialize(participant, ParticipantSerializer)
+    }
   end
 
   # PATCH/PUT /participants/1
   def update
-    if @participant.update(participant_params)
-      render json: @participant
+    if @participant.update!(participant_params)
+      render json: {
+        message: 'Updated the participant successfully',
+        data: serialize(@participant, ParticipantSerializer)
+      }
     else
       render json: @participant.errors, status: :unprocessable_entity
     end
@@ -37,7 +45,13 @@ class ParticipantsController < ApplicationController
 
   # DELETE /participants/1
   def destroy
-    @participant.destroy
+    if @participant.destroy
+      render json: {
+        message: 'Delete garis'
+      }
+    else
+      render json: @participant.errors, status: :unprocessable_entity
+    end
   end
 
   private
@@ -49,6 +63,6 @@ class ParticipantsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def participant_params
-    params.fetch(:participant, {})
+    params.permit(:name, :email, :collage, :faculty, :phone_no, :event_id)
   end
 end

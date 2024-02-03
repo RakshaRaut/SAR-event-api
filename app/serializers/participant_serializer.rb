@@ -24,5 +24,10 @@
 #  fk_rails_...  (event_id => events.id)
 #
 class ParticipantSerializer < ActiveModel::Serializer
-  attributes :id
+  attributes :id,
+             :name,
+             :email,
+             :collage,
+             :faculty,
+             :phone_no
 end

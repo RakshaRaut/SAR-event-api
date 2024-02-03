@@ -46,12 +46,12 @@ class EventsController < ApplicationController
   # DELETE /events/1
   def destroy
     if @event.destroy
-      render json:{
-        message: 'You are thanos',
+      render json: {
+        message: 'You are thanos'
       }
     else
       render json: @event.errors, status: :unprocessable_entity
-    end    
+    end
   end
 
   private
