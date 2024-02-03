@@ -31,6 +31,6 @@ class Event < ApplicationRecord
             :venue, presence: true
 
   def image_url
-    image.attached? && url_for(image)
+    cover_image.attached? && url_for(cover_image)
   end
 end
