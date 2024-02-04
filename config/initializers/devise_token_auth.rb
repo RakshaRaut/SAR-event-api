@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 DeviseTokenAuth.setup do |config|
-
   config.cookie_enabled = true
   config.cookie_attributes = {
     httponly: true,
