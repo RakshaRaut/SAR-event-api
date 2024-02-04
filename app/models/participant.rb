@@ -25,7 +25,7 @@
 #
 class Participant < ApplicationRecord
   belongs_to :event
-  has_many :attendances
+  has_many :attendancesz
 
   validates :name, :email, :collage, :faculty, :phone_no, :event_id, presence: true
 end
