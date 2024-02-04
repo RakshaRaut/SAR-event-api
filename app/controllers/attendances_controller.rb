@@ -17,7 +17,7 @@ class AttendancesController < ApplicationController
   # POST /attendances
   def create
     participant = Participant.find_by(email: attendance_params[:email])
-    pry
+
     if participant.nil?
       render json: {
         message: 'Talai tori, register garyo rainaxas ni nigga'
