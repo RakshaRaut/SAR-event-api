@@ -20,7 +20,7 @@ require 'action_cable/engine'
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
-module EventApi
+module ApiAstromandu
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 7.0
@@ -37,12 +37,8 @@ module EventApi
     # Middleware like session, flash, cookies can be added back manually.
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
-    config.cookie_enabled = true
-    config.cookie_attributes = {
-      httponly: true,
-      encrypt: true,
-      same_site: :strict,
-      secure: true
-    }
+    config.session_store :cookie_store, key: '_user_session', httponly: true, same_site: :strict, secure: true
+    config.middleware.use ActionDispatch::Cookies
+    config.middleware.use config.session_store, config.session_options
   end
 end

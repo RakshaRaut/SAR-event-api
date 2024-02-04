@@ -16,4 +16,8 @@ class ApplicationController < ActionController::API
 
     ActiveModelSerializers::SerializableResource.new(data, each_serializer: serializer)
   end
+
+  def true?(data)
+    data.to_s.eql? 'true'
+  end
 end

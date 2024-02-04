@@ -3,6 +3,8 @@
 class AttendancesController < ApplicationController
   before_action :set_attendance, only: %i[show]
 
+  before_action :authenticate_user!, only: %i[index]
+
   # GET /attendances
   def index
     attendance = Attendance.where(event_id: params[:event_id])
